@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09090c">
+<title>RAMÇO KARAOKE</title>
+<style>
+:root{--bg:#08080b;--panel:#141419;--panel2:#1b1b22;--red:#ff2638;--red2:#b5091c;--muted:#a7a7b2;--line:#303039;--white:#f8f8fb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% 0%,#3b0711 0,transparent 35%),linear-gradient(145deg,#09090c,#101015 55%,#08080b);color:var(--white);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer;color:inherit}.app{max-width:1500px;margin:auto;padding:16px}.top{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:18px}.brand{font-size:clamp(26px,4vw,42px);font-weight:950;letter-spacing:2px;font-style:italic;text-shadow:0 0 16px #ff2638}.brand small{display:block;font-size:11px;letter-spacing:7px;color:#ff5260;margin-top:-7px}.search{flex:1;min-width:220px;display:flex;gap:8px}.search input{width:100%;background:#15151b;border:1px solid #6b1a26;border-radius:30px;color:white;padding:13px 18px;outline:none;box-shadow:0 0 14px #ff263822}.btn{background:linear-gradient(135deg,#ff3346,#a90019);border:1px solid #ff6875;border-radius:12px;padding:10px 15px;font-weight:700;box-shadow:0 0 15px #ff263833}.btn.secondary{background:#1a1a21;border-color:#45454e;box-shadow:none}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.layout{display:grid;grid-template-columns:205px 1fr;gap:16px}.side,.panel,.player,.audio-panel{background:#131319eF;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 35px #0008}.side{padding:12px;height:max-content;position:sticky;top:12px}.nav{display:flex;align-items:center;gap:12px;padding:12px;border-radius:11px;color:#ddd;cursor:pointer;margin:3px 0}.nav:hover,.nav.active{background:linear-gradient(90deg,#a9001b,#3a1019);box-shadow:0 0 16px #ff263833}.main{min-width:0}.genres{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}.genre{border:1px solid #65202b;border-radius:14px;padding:17px 8px;text-align:center;background:linear-gradient(145deg,#35111b,#17171e);font-weight:800}.genre span{display:block;font-size:25px;margin-bottom:5px}.genre:hover,.genre.selected{outline:2px solid var(--red);box-shadow:0 0 18px #ff263844}.content{display:grid;grid-template-columns:minmax(250px,.8fr) minmax(0,1.4fr);gap:14px}.panel{padding:15px;min-width:0}.panel h2{margin:0 0 12px;font-size:19px}.song-list{display:flex;flex-direction:column;gap:7px;max-height:500px;overflow:auto}.song{display:grid;grid-template-columns:42px 1fr auto auto;gap:10px;align-items:center;background:#1b1b22;border:1px solid #303039;border-radius:11px;padding:9px}.song .cover{width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,#6e091a,#222);display:grid;place-items:center;font-size:20px}.song b{display:block;font-size:14px}.song small{color:var(--muted)}.song button{background:transparent;border:0;font-size:18px}.song button:hover{color:#ff5260}.player{overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 0%,#48101d,#111116 65%);padding:16px}.trackline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.trackline small{color:#bbb}.stage{min-height:275px;margin:14px 0;border:1px solid #54202b;border-radius:13px;background:linear-gradient(180deg,#1b070d,#09090d 70%);display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;position:relative;overflow:hidden}.stage:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(105deg,transparent 0 12%,#ff26380a 13% 14%,transparent 15% 27%);pointer-events:none}.lyrics{position:relative;font-size:clamp(19px,2.4vw,30px);font-weight:850;line-height:1.8;text-shadow:0 0 18px #ff2638;white-space:pre-wrap}.lyrics .current{color:#ff5a68}.lyrics .lyric-word{display:inline-block;padding:0 .06em;border-radius:.18em;transition:color .12s,background .12s,text-shadow .12s}
+.lyrics .lyric-word.done{color:#ff8993}
+.lyrics .lyric-word.active{color:#fff;background:#c41430;text-shadow:0 0 16px #ff2638,0 0 28px #ff2638;box-shadow:0 0 12px #ff263855}
+.lyrics .lyric-word.pending{color:#aaa}.controls{display:flex;align-items:center;justify-content:center;gap:14px;margin:12px}.round{width:48px;height:48px;border-radius:50%;border:1px solid #ff6875;background:#b80d25;font-size:20px;box-shadow:0 0 20px #ff263855}.progress{display:flex;gap:10px;align-items:center}.progress input{flex:1;accent-color:var(--red)}.audio-panel{margin-top:14px;padding:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.slider label{display:flex;justify-content:space-between;font-size:12px;color:#ddd;margin-bottom:6px}.slider input{width:100%;accent-color:var(--red)}.microw{display:flex;align-items:center;gap:8px;grid-column:span 2}.ytbox{margin-top:14px;background:#131319;border:1px solid #3a252b;border-radius:16px;padding:14px}.ytrow{display:flex;gap:8px;flex-wrap:wrap}.ytrow input{flex:1;min-width:180px;background:#09090d;border:1px solid #49404a;border-radius:10px;color:#fff;padding:11px}.ytframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#050505;margin-top:12px;position:relative;overflow:hidden}.ytframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px}.ytinfo{font-size:12px;color:#aaa;margin-top:8px}.footnote{color:#a5a5ad;font-size:12px;margin:12px 2px}.modal{display:none;position:fixed;inset:0;background:#000b;z-index:5;align-items:center;justify-content:center;padding:16px}.modal.open{display:flex}.modalbox{width:min(650px,100%);background:#17171e;border:1px solid #6d2632;border-radius:18px;padding:18px;box-shadow:0 0 40px #ff263833}.modalbox textarea{width:100%;min-height:220px;background:#09090d;border:1px solid #444;color:white;border-radius:10px;padding:12px}.sync-word{font-size:clamp(28px,7vw,48px);font-weight:900;text-align:center;padding:18px 8px;color:#fff;text-shadow:0 0 18px #ff2638}.sync-progress{height:8px;background:#303039;border-radius:9px;overflow:hidden;margin:12px 0}.sync-progress>i{display:block;height:100%;background:linear-gradient(90deg,#ff2638,#ff8993);width:0}.sync-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.sync-actions button{min-height:48px}.sync-help{font-size:13px;color:#bdbdc7;line-height:1.55}.sync-count{text-align:center;color:#ddd;font-size:13px;margin-top:5px}.modalbox input[type=text]{width:100%;background:#09090d;border:1px solid #444;color:white;border-radius:9px;padding:10px;margin:7px 0}.hidden{display:none!important}#audioFile{display:none}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#282830;border:1px solid #ff5260;border-radius:12px;padding:10px 16px;display:none;z-index:10}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:static;display:flex;overflow:auto;gap:5px}.nav{white-space:nowrap;padding:9px}.genres{grid-template-columns:repeat(3,1fr)}.content{grid-template-columns:1fr}.song-list{max-height:260px}.audio-panel{grid-template-columns:repeat(2,1fr)}.microw{grid-column:span 2}}
+@media(max-width:520px){.app{padding:10px}.top{gap:10px}.top-actions{width:100%}.top-actions button{flex:1}.genres{gap:7px}.genre{padding:12px 4px;font-size:13px}.genre span{font-size:21px}.player{padding:11px}.stage{min-height:240px}.audio-panel{gap:12px}.side{border-radius:12px}.nav{font-size:12px}.nav span:first-child{font-size:17px}}
+:fullscreen .app{max-width:none;height:100vh;display:flex;flex-direction:column}.stage:fullscreen{height:100vh}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+  <div class="brand">🎙 RAMÇO<small>K A R A O K E</small></div>
+  <div class="search"><input id="search" placeholder="Şarkı veya sanatçı ara..." aria-label="Şarkı ara"><button class="btn" id="searchBtn">Ara</button></div>
+  <div class="top-actions"><button class="btn secondary" id="favFilter">☆ Favoriler</button><button class="btn secondary" id="lyricsBtn">Sözleri düzenle</button><button class="btn secondary" id="manualSyncBtn">⏱ Kelime senkronu</button><button class="btn secondary" id="fullBtn">⛶ Tam ekran</button></div>
+</header>
+<div class="layout">
+<aside class="side">
+ <div class="nav active" data-view="all"><span>⌂</span>Ana Sayfa</div><div class="nav" data-view="all"><span>♫</span>Şarkı Listesi</div><div class="nav" id="uploadNav"><span>＋</span>Dosya yükle</div><div class="nav" id="favNav"><span>♡</span>Favoriler</div><div class="nav" id="youtubeNav"><span>▶</span>YouTube'da ara</div><div class="nav" id="micNav"><span>🎙</span>Mikrofon</div><div class="nav" id="stageNav"><span>✦</span>Sahne Modu</div>
+</aside>
+<main class="main">
+ <section class="genres" id="genres">
+  <button class="genre selected" data-genre="Tümü"><span>🎵</span>Tümü</button><button class="genre" data-genre="Pop"><span>🎤</span>Pop</button><button class="genre" data-genre="Slow"><span>♡</span>Slow</button><button class="genre" data-genre="Arabesk"><span>🎙</span>Arabesk</button><button class="genre" data-genre="Türkü"><span>🪕</span>Türkü</button><button class="genre" data-genre="Hareketli"><span>💿</span>Hareketli</button>
+ </section>
+ <section class="content">
+  <div class="panel"><h2>🔴 Şarkı kütüphanem</h2><div class="footnote" style="margin:0 0 10px">Örnek liste • Kendi müziklerini ekleyebilirsin</div><div class="song-list" id="songList"></div><div style="margin-top:12px"><label class="btn" for="fileInput">＋ Telefondan müzik ekle</label><input id="fileInput" type="file" accept="audio/*" multiple></div></div>
+  <div class="player">
+   <div class="trackline"><div><b id="trackTitle">Henüz şarkı seçilmedi</b><br><small id="trackArtist">Bir şarkı seç veya telefonundan yükle</small></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn secondary" id="karaokeToggle">🎤 Karaoke modu: Açık</button><button class="btn secondary" id="vocalToggle" aria-pressed="false">🎚 Vokal azalt: Kapalı</button></div></div>
+   <div class="stage" id="stage"><div class="lyrics" id="lyricsDisplay">RAMÇO KARAOKE'YE HOŞ GELDİN<br><span class="current">Şarkını seç, sahne senin!</span></div></div>
+   <div class="progress"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0"><span id="duration">0:00</span></div>
+   <div class="controls"><button class="round" id="stopBtn" title="Durdur">■</button><button class="round" id="playBtn" title="Oynat">▶</button><button class="round" id="nextBtn" title="Sonraki">»</button></div>
+   <audio id="audio" crossorigin="anonymous"></audio>
+  </div>
+ </section>
+ <section class="ytbox" id="youtubePanel">
+  <div class="trackline"><div><h2 style="margin:0">▶ YouTube Şarkıları</h2><small>Normal şarkıları RAMÇO içinden aç, sözleri sahnede göster</small></div><span class="footnote">Resmî YouTube oynatıcısı</span></div>
+  <div class="ytrow" style="margin-top:12px"><input id="ytQuery" placeholder="Örn. Müslüm Gürses – Nilüfer" aria-label="YouTube normal şarkı ara"><button class="btn" id="ytSearch">Şarkı ara</button></div>
+  <div id="ytResults" class="song-list" style="margin-top:10px;max-height:320px"></div>
+  <div class="ytrow" style="margin-top:10px"><button class="btn secondary" id="ytLyricsBtn">♫ Sözleri elle düzenle</button><button class="btn secondary" id="autoLyricsBtn">✨ Otomatik söz bul</button><span class="ytinfo" id="lyricsStatus">Şarkı seçilince zaman kodlu sözler otomatik aranır.</span></div>
+  <details style="margin-top:10px"><summary style="cursor:pointer;color:#ddd">YouTube arama bağlantısı ayarları</summary><p class="ytinfo">Arama sonuçlarını RAMÇO içinde listelemek için Google Cloud Console'dan YouTube Data API v3 anahtarı gerekir. Anahtar bu cihazın tarayıcısında saklanır; herkese açık dağıtımda güvenlik için sunucu tarafında saklanmalıdır.</p><div class="ytrow"><input id="ytApiKey" type="password" placeholder="YouTube Data API anahtarı"><button class="btn secondary" id="saveYtKey">Anahtarı kaydet</button></div></details>
+  <div class="ytrow" style="margin-top:10px"><input id="ytUrl" placeholder="YouTube video bağlantısı veya video kodu"><button class="btn secondary" id="ytLoad">RAMÇO'da oynat</button></div>
+  <div id="ytStatus" class="ytinfo">Normal YouTube şarkıları aranır. Video, resmî YouTube oynatıcısında RAMÇO içinde açılır.</div>
+  <div id="ytFrame" class="ytframe" title="RAMÇO YouTube şarkı oynatıcı"></div>
+  <div class="ytinfo">Not: Yerel HTML dosyalarında (file://) YouTube 153 hatası görülebilir. Gömülü oynatıcı için RAMÇO'nun HTTPS adresinde çalışması gerekir. Bazı videolar sahipleri tarafından gömülü oynatmaya kapatılmış olabilir.</div>
+ </section>
+ <p class="footnote">Vokal azaltma düğmesi korunmuştur. Yerel ses dosyalarında çalışır; YouTube'un korumalı gömülü oynatıcısının sesini tarayıcı güvenlik sınırları nedeniyle RAMÇO işleyemez.</p>
+ <section class="audio-panel">
+  <div class="microw"><button class="btn" id="micButton">🎙 Mikrofonu aç</button><span id="micStatus" class="footnote">Kapalı</span></div>
+  <div class="slider"><label>Echo <b id="echoVal">20%</b></label><input id="echo" type="range" min="0" max="100" value="20"></div>
+  <div class="slider"><label>Reverb <b id="reverbVal">15%</b></label><input id="reverb" type="range" min="0" max="100" value="15"></div>
+  <div class="slider"><label>Bass <b id="bassVal">50%</b></label><input id="bass" type="range" min="0" max="100" value="50"></div>
+  <div class="slider"><label>Tiz <b id="trebleVal">50%</b></label><input id="treble" type="range" min="0" max="100" value="50"></div>
+  <div class="slider"><label>Ses seviyesi <b id="volumeVal">80%</b></label><input id="volume" type="range" min="0" max="100" value="80"></div>
+ </section>
+ <p class="footnote">Mikrofon efektleri için kulaklık ve Chrome mikrofon izni önerilir. Canlı mikrofonu hoparlöre vermek geri besleme/ötme oluşturabilir. Efektler cihaz ve tarayıcı desteğine bağlıdır.</p>
+</main></div></div>
+<div class="modal" id="lyricsModal"><div class="modalbox"><h2>Şarkı sözlerini ekle</h2><p class="footnote">Kendi yazdığın veya kullanma iznin olan sözleri ekleyebilirsin. Zaman kodlu sözler otomatik akış için tercih edilir. Sözler bu cihazda saklanır.</p><input id="lyricTitle" type="text" placeholder="Şarkı adı"><textarea id="lyricInput" placeholder="Şarkı sözlerini satır satır buraya yaz..."></textarea><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px"><button class="btn secondary" id="cancelLyrics">Vazgeç</button><button class="btn" id="saveLyrics">Kaydet</button></div></div></div>
+<div class="modal" id="syncModal"><div class="modalbox"><h2>⏱ Manuel kelime senkronu</h2><p class="sync-help">Sözleri satır satır yaz veya mevcut sözleri kullan. Şarkıyı başlat. Her kelime duyulduğu anda <b>Bu kelimeyi zamanla</b> düğmesine dokun. RAMÇO her dokunuşun saniyesini kaydeder. Zamanlama bu telefonda saklanır.</p><textarea id="syncLyricsInput" placeholder="Sözleri satır satır buraya yaz..."></textarea><div class="sync-word" id="syncCurrentWord">Önce sözleri hazırla</div><div class="sync-progress"><i id="syncProgressBar"></i></div><div class="sync-count" id="syncCount">0 / 0 kelime zamanlandı</div><div class="sync-actions"><button class="btn secondary" id="syncStartPlayback">▶ Şarkıyı başlat</button><button class="btn secondary" id="syncUndo">↶ Son kaydı geri al</button><button class="btn" id="syncTapWord">Bu kelimeyi zamanla →</button><button class="btn secondary" id="syncFinish">Kaydet ve bitir</button></div><p class="sync-help" id="syncStatus" style="margin-bottom:0">İpucu: Her kelimenin başında dokun. Bir kelimeyi kaçırırsan geri alıp yeniden zamanlayabilirsin.</p><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="btn secondary" id="syncCancel">Kapat</button></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const audio=$('#audio');let playbackCtx=null,playbackSource=null,playbackOutput=null,vocalSplitter=null,vocalLeft=null,vocalRight=null,vocalMerger=null,vocalGain=null,vocalReduced=false;let songs=[
+ {id:1,title:'Kendi şarkını ekle',artist:'Telefonundan ses dosyası yükle',genre:'Tümü',src:'',lyrics:'Şarkı sözlerini düzenle bölümünden kendi sözlerini ekleyebilirsin.'},
+ {id:2,title:'Örnek Arabesk parça',artist:'Demo içerik',genre:'Arabesk',src:'',lyrics:'Bu gece yine yıldızlara bakarım\\nBir umutla sabahı ararım\\n[Demo sözler – kendi içeriğinle değiştir]'},
+ {id:3,title:'Örnek Slow parça',artist:'Demo içerik',genre:'Slow',src:'',lyrics:'Sessiz sokaklarda yürürüm\\nEski günleri düşünürüm\\n[Demo sözler – kendi içeriğinle değiştir]'},
+ {id:4,title:'Örnek Pop parça',artist:'Demo içerik',genre:'Pop',src:'',lyrics:'Ritmi hisset, müziğe katıl\\nBu gece bizim, hadi parılda\\n[Demo sözler – kendi içeriğinle değiştir]'},
+ {id:5,title:'Örnek Türkü',artist:'Demo içerik',genre:'Türkü',src:'',lyrics:'Dağların ardında bir yol görünür\\nGönülden gönüle bir ses yürür\\n[Demo sözler – kendi içeriğinle değiştir]'}
+];let current=null,filter='Tümü',favorites=new Set(JSON.parse(localStorage.getItem('ramcoFavs')||'[]')),showFav=false,ctx=null,micStream=null,micSource=null,micGain=null,delay=null,feedback=null,reverb=null,convolver=null,low=null,high=null,micOn=false;
+let timedLyrics=[],plainLyrics='',ytPlayer=null,ytApiReady=false,ytPending=null,lyricsRequestToken=0,lastRenderedLyric=-1;let manualWordTimings=[],syncWords=[],syncIndex=0;
+
+function toast(t){let x=$('#toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2600)}
+function fmt(s){if(!isFinite(s))return'0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')}
+const savedLyrics=JSON.parse(localStorage.getItem('ramcoLyrics')||'{}');songs.forEach(s=>{if(savedLyrics[s.id])s.lyrics=savedLyrics[s.id]});
+function render(){let q=$('#search').value.toLocaleLowerCase('tr');let list=songs.filter(s=>(filter==='Tümü'||s.genre===filter)&&( !showFav||favorites.has(s.id))&&(`${s.title} ${s.artist}`.toLocaleLowerCase('tr').includes(q)));$('#songList').innerHTML=list.map(s=>`<div class="song"><div class="cover">♫</div><div><b>${esc(s.title)}</b><small>${esc(s.artist)} · ${esc(s.genre)}</small></div><button title="Çal" data-play="${s.id}">▶</button><button title="Favori" data-fav="${s.id}">${favorites.has(s.id)?'★':'☆'}</button></div>`).join('')||'<p class="footnote">Bu filtrede şarkı yok. Telefonundan müzik ekleyebilirsin.</p>'}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function selectSong(id){current=songs.find(s=>s.id===id);if(!current)return;loadManualTimings();timedLyrics=[];plainLyrics=current.lyrics||'';lastRenderedLyric=-1;$('#trackTitle').textContent=current.title;$('#trackArtist').textContent=current.artist;$('#lyricsDisplay').textContent=current.lyrics||'Otomatik zaman kodlu sözler aranıyor…';if(current.src){if(ytPlayer?.pauseVideo)ytPlayer.pauseVideo();audio.src=current.src;audio.play().catch(()=>{});$('#playBtn').textContent='Ⅱ';findLyrics(current.title,current.artist)}else{audio.removeAttribute('src');audio.load();$('#playBtn').textContent='▶';toast('Bu örnek kayıtta ses yok. Kendi müzik dosyanı yükle.')} }
+$('#songList').addEventListener('click',e=>{let p=e.target.closest('[data-play]'),f=e.target.closest('[data-fav]');if(p)selectSong(+p.dataset.play);if(f){let id=+f.dataset.fav;favorites.has(id)?favorites.delete(id):favorites.add(id);localStorage.setItem('ramcoFavs',JSON.stringify([...favorites]));render()}});
+$$('.genre').forEach(b=>b.onclick=()=>{filter=b.dataset.genre;showFav=false;$$('.genre').forEach(x=>x.classList.toggle('selected',x===b));render()});
+$('#search').oninput=render;$('#searchBtn').onclick=render;
+$('#fileInput').onchange=e=>{[...e.target.files].forEach(file=>{let s={id:Date.now()+Math.random(),title:file.name.replace(/\.[^.]+$/,''),artist:'Yerel dosya',genre:'Tümü',src:URL.createObjectURL(file),lyrics:''};songs.unshift(s)});render();toast('Müzik dosyan eklendi.');e.target.value=''};
+$('#uploadNav').onclick=()=>$('#fileInput').click();$('#favNav').onclick=$('#favFilter').onclick=()=>{showFav=!showFav;render();toast(showFav?'Favoriler gösteriliyor':'Tüm şarkılar gösteriliyor')};
+$('#ytApiKey').value=localStorage.getItem('ramcoYoutubeApiKey')||'';
+$('#saveYtKey').onclick=()=>{let k=$('#ytApiKey').value.trim();if(!k){toast('API anahtarını gir.');return}localStorage.setItem('ramcoYoutubeApiKey',k);toast('YouTube arama anahtarı bu cihaza kaydedildi.')};
+function loadYouTubeIframeAPI(){if(window.YT&&window.YT.Player){ytApiReady=true;return}if(document.getElementById('yt-iframe-api'))return;let tag=document.createElement('script');tag.id='yt-iframe-api';tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);window.onYouTubeIframeAPIReady=()=>{ytApiReady=true;if(ytPending)createYTPlayer(ytPending)}}
+function createYTPlayer(data){if(!ytApiReady||!data)return;let cfg={videoId:data.id,playerVars:{autoplay:1,rel:0,playsinline:1,enablejsapi:1,origin:location.origin},events:{onReady:e=>{try{e.target.playVideo()}catch(_){}},onStateChange:e=>{if(e.data===1){$('#ytStatus').textContent='Şarkı RAMÇO içinde çalıyor. Zaman kodlu sözler senkronize ediliyor.';startLyricTicker()}else if(e.data===0){stopLyricTicker()}}}};try{if(ytPlayer&&ytPlayer.loadVideoById){ytPlayer.loadVideoById(data.id)}else{ytPlayer=new YT.Player('ytFrame',cfg)}}catch(e){$('#ytStatus').textContent='YouTube oynatıcı başlatılamadı. Sayfayı yenileyip tekrar dene.'}}
+function setYoutubePlayer(id,title='',channel=''){if(location.protocol!=='https:'&&location.protocol!=='http:'){$('#ytStatus').textContent='YouTube oynatımı için RAMÇO HTTPS adresinde açılmalı.';toast('YouTube oynatımı için HTTPS adresi gerekli.');return false}localStorage.setItem('ramcoLastYoutube',id);localStorage.setItem('ramcoLastYoutubeTitle',title||'');localStorage.setItem('ramcoLastYoutubeChannel',channel||'');let saved=JSON.parse(localStorage.getItem('ramcoYtLyrics')||'{}');current={id:'yt_'+id,title:title||'YouTube şarkısı',artist:channel||'YouTube',genre:'YouTube',src:'',lyrics:saved[id]||'',youtubeId:id};loadManualTimings();timedLyrics=[];plainLyrics=current.lyrics||'';lastRenderedLyric=-1;$('#trackTitle').textContent=current.title;$('#trackArtist').textContent=current.artist+' · YouTube';$('#lyricsDisplay').textContent=current.lyrics||'Zaman kodlu sözler otomatik aranıyor…';$('#lyricsStatus').textContent='Şarkıya uygun senkronize sözler aranıyor…';$('#ytStatus').textContent='YouTube oynatıcı hazırlanıyor…';ytPending={id,title,channel};loadYouTubeIframeAPI();if(ytApiReady)createYTPlayer(ytPending);findLyrics(title||'YouTube şarkısı',channel||'');return true}
+function parseLRC(lrc){let out=[];for(let line of (lrc||'').split(/\r?\n/)){let re=/\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\]/g,m,stamps=[];while((m=re.exec(line))!==null){let frac=(m[3]||'0').padEnd(3,'0');stamps.push(Number(m[1])*60+Number(m[2])+Number(frac)/1000)}let text=line.replace(/\[\d{1,2}:\d{2}(?:\.\d{1,3})?\]/g,'').trim();for(let t of stamps)out.push({time:t,text})}return out.sort((a,b)=>a.time-b.time)}
+function normalizeTrack(s){return (s||'').toLocaleLowerCase('tr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9ğüşöçıİ ]/gi,' ').replace(/\s+/g,' ').trim()}
+function manualSyncKey(){return current?(current.youtubeId?'yt_'+current.youtubeId:'track_'+normalizeTrack(current.title)+'_'+normalizeTrack(current.artist||'')):''}
+function loadManualTimings(){let key=manualSyncKey();if(!key){manualWordTimings=[];return}try{let all=JSON.parse(localStorage.getItem('ramcoManualWordTimings')||'{}');manualWordTimings=Array.isArray(all[key])?all[key]:[]}catch(_){manualWordTimings=[]}}
+function saveManualTimings(){let key=manualSyncKey();if(!key)return false;let all={};try{all=JSON.parse(localStorage.getItem('ramcoManualWordTimings')||'{}')}catch(_){}all[key]=manualWordTimings;localStorage.setItem('ramcoManualWordTimings',JSON.stringify(all));return true}
+function renderManualTimedLyrics(time){
+ if(!manualWordTimings.length)return false;
+ let active=-1;for(let i=0;i<manualWordTimings.length;i++){if(manualWordTimings[i].time<=time)active=i;else break}
+ let line=active>=0?manualWordTimings[active].line:manualWordTimings[0].line;
+ let lines=[...new Set(manualWordTimings.map(w=>w.line))];
+ let showLines=lines.filter(n=>n>=line-1&&n<=line+1);
+ let html=showLines.map(n=>{let ws=manualWordTimings.filter(w=>w.line===n);let content=ws.map(w=>{let i=manualWordTimings.indexOf(w);let cls=i<active?'done':i===active?'active':'pending';return `<span class="lyric-word ${cls}">${esc(w.text)}</span>`}).join(' ');let opacity=n===line?'1':n<line?'.38':'.62';let size=n===line?'1.16em':'.9em';return `<div style="opacity:${opacity};font-size:${size}">${content}</div>`}).join('');$('#lyricsDisplay').innerHTML=html;return true;
+}
+function buildSyncWords(text){let rows=(text||'').split(/\r?\n/);let out=[];rows.forEach((row,line)=>row.trim().split(/\s+/).filter(Boolean).forEach(word=>out.push({text:word,line,time:null})));return out}
+function updateSyncPanel(){let total=syncWords.length,done=syncIndex;$('#syncCount').textContent=`${done} / ${total} kelime zamanlandı`;$('#syncProgressBar').style.width=(total?done/total*100:0)+'%';$('#syncCurrentWord').textContent=syncWords[syncIndex]?.text|| (total?'Tüm kelimeler zamanlandı':'Önce sözleri hazırla');$('#syncTapWord').disabled=!total||syncIndex>=total;$('#syncUndo').disabled=!done;}
+function openManualSync(){if(!current){toast('Önce bir şarkı seç veya YouTube şarkısı aç.');return}$('#syncLyricsInput').value=current.lyrics||plainLyrics||timedLyrics.map(x=>x.text).join('\n')||(manualWordTimings.length?[...new Set(manualWordTimings.map(w=>w.line))].map(n=>manualWordTimings.filter(w=>w.line===n).map(w=>w.text).join(' ')).join('\n'):'');syncWords=[];syncIndex=0;$('#syncStatus').textContent='Sözleri kontrol et. Ardından Şarkıyı başlat düğmesine basıp her kelimenin başında zamanla.';updateSyncPanel();$('#syncModal').classList.add('open')}
+$('#manualSyncBtn').onclick=openManualSync;
+$('#syncStartPlayback').onclick=()=>{let txt=$('#syncLyricsInput').value.trim();if(!txt){toast('Önce şarkı sözlerini yaz veya yapıştır.');return}syncWords=buildSyncWords(txt);syncIndex=0;if(current?.youtubeId){try{ytPlayer?.playVideo?.()}catch(_){}}else if(audio.src){audio.play().catch(()=>{});$('#playBtn').textContent='Ⅱ'}else{toast('Önce bir YouTube şarkısı veya telefonundan ses dosyası aç.');return}$('#syncStatus').textContent='Şarkı başladı. Duyduğun ilk kelimenin başında aşağıdaki kırmızı düğmeye dokun.';updateSyncPanel()};
+$('#syncTapWord').onclick=()=>{if(!syncWords.length||syncIndex>=syncWords.length)return;let t=getPlaybackTime();syncWords[syncIndex].time=Number(t.toFixed(3));syncIndex++;updateSyncPanel();if(syncIndex>=syncWords.length)$('#syncStatus').textContent='Bütün kelimeler zamanlandı. Kaydet ve bitir düğmesine bas.'};
+$('#syncUndo').onclick=()=>{if(syncIndex>0){syncIndex--;syncWords[syncIndex].time=null;updateSyncPanel();$('#syncStatus').textContent='Son kelime geri alındı. Tekrar zamanlayabilirsin.'}};
+$('#syncFinish').onclick=()=>{if(!current){toast('Aktif şarkı bulunamadı.');return}if(!syncWords.length||syncIndex===0){toast('Henüz kelime zamanlamadın.');return}manualWordTimings=syncWords.slice(0,syncIndex).map(w=>({...w}));saveManualTimings();current.lyrics=$('#syncLyricsInput').value.trim();plainLyrics=current.lyrics;if(current.youtubeId){let saved=JSON.parse(localStorage.getItem('ramcoYtLyrics')||'{}');saved[current.youtubeId]=current.lyrics;localStorage.setItem('ramcoYtLyrics',JSON.stringify(saved))}timedLyrics=[];lastRenderedLyric=-1;$('#syncModal').classList.remove('open');renderTimedLyrics(getPlaybackTime());$('#lyricsStatus').textContent=`✓ Manuel senkron kaydedildi: ${manualWordTimings.length} kelime`;toast('Kelime zamanları bu telefona kaydedildi.');};
+$('#syncCancel').onclick=()=>$('#syncModal').classList.remove('open');
+function renderTimedLyrics(time){
+ if(manualWordTimings.length){renderManualTimedLyrics(time);return}
+ if(!timedLyrics.length)return;
+ let idx=-1;
+ for(let i=0;i<timedLyrics.length;i++){
+  if(timedLyrics[i].time<=time)idx=i;else break;
+ }
+ let row=idx>=0?timedLyrics[idx]:null;
+ let next=idx+1<timedLyrics.length?timedLyrics[idx+1]:null;
+ let words=row?(row.text||'♪').trim().split(/\s+/).filter(Boolean):[];
+ // LRC yalnızca satır başlangıçlarını verir; kelime vurgusu satır süresine eşit dağıtılır.
+ // Bu nedenle görsel karaoke akışıdır, gerçek kelime zaman damgası değildir.
+ let span=next?Math.max(.25,next.time-row.time):Math.max(2.5,words.length*.38);
+ let progress=row?Math.max(0,Math.min(.999,(time-row.time)/span)):0;
+ let activeWord=words.length?Math.min(words.length-1,Math.floor(progress*words.length)):-1;
+ let signature=idx+':'+activeWord;
+ if(signature===lastRenderedLyric)return;
+ lastRenderedLyric=signature;
+ let lines=[];
+ if(idx>0)lines.push(`<div style="opacity:.38;font-size:.78em">${esc(timedLyrics[idx-1].text)}</div>`);
+ if(idx>=0){
+  let wordHtml=words.map((w,i)=>`<span class="lyric-word ${i<activeWord?'done':i===activeWord?'active':'pending'}">${esc(w)}</span>`).join(' ');
+  lines.push(`<div class="current" style="font-size:1.16em">${wordHtml||'♪'}</div>`);
+ }else{
+  lines.push('<div style="opacity:.55">♪ ♪ ♪</div>');
+ }
+ if(idx+1<timedLyrics.length)lines.push(`<div style="opacity:.62;font-size:.9em">${esc(timedLyrics[idx+1].text)}</div>`);
+ $('#lyricsDisplay').innerHTML=lines.join('');
+}
+function cleanVideoTrackTitle(raw,artist=''){
+ let s=(raw||'').replace(/\s*[\[(](?:official|lyric|lyrics|music|video|audio|hd|4k|remaster|visualizer| клип)[^\])]*[\])]/ig,' ');
+ s=s.replace(/\b(?:official|music video|official video|official audio|lyrics video|lyric video|audio|lyrics|lyric|hd|4k|remastered|remaster|visualizer)\b/ig,' ');
+ s=s.replace(/\s*[-|–—]\s*(?:official.*|lyrics?.*|music video.*)$/i,' ').replace(/\s+/g,' ').trim();
+ let a=(artist||'').trim();
+ if(a && normalizeTrack(s).startsWith(normalizeTrack(a)+' ')) s=s.slice(a.length).replace(/^\s*[-|–—:]\s*/,'').trim();
+ let m=s.match(/^(.+?)\s*[-|–—]\s*(.+)$/);
+ if(m && a && normalizeTrack(m[1]).includes(normalizeTrack(a))) s=m[2].trim();
+ return s||raw||'';
+}
+async function findLyrics(title,artist=''){
+ if(!title||title==='YouTube şarkısı')return;
+ let token=++lyricsRequestToken;
+ $('#lyricsStatus').textContent='Şarkı adı temizleniyor, zaman kodlu sözler aranıyor…';
+ try{
+  let track=cleanVideoTrackTitle(title,artist);
+  let artistClean=(artist||'').replace(/\b(?:official|records|channel|vevo)\b/ig,' ').replace(/\s+/g,' ').trim();
+  let queries=[`${track} ${artistClean}`.trim(),track,title.replace(/\([^)]*\)/g,' ').replace(/\s+/g,' ').trim()]
+   .filter((v,i,a)=>v&&a.indexOf(v)===i);
+  let all=[];
+  for(const q of queries){
+   let url='https://lrclib.net/api/search?'+new URLSearchParams({q});
+   let r=await fetch(url,{headers:{'Lrclib-Client':'RAMCO-Karaoke/2.2 (web app)'}});
+   if(token!==lyricsRequestToken)return;
+   if(r.status===429)continue;
+   if(!r.ok)continue;
+   let arr=await r.json();
+   if(Array.isArray(arr))all.push(...arr);
+   if(all.some(x=>x.syncedLyrics))break;
+  }
+  if(token!==lyricsRequestToken)return;
+  let unique=[...new Map(all.map(x=>[x.id||`${x.trackName}|${x.artistName}`,x])).values()];
+  let target=normalizeTrack(track), artistNorm=normalizeTrack(artistClean);
+  let words=target.split(' ').filter(x=>x.length>1);
+  let ranked=unique.map(x=>{
+   let name=normalizeTrack(x.trackName), artistName=normalizeTrack(x.artistName);
+   let hit=words.filter(w=>name.includes(w)).length;
+   let score=words.length?hit/words.length:0;
+   if(name===target)score+=1.25;
+   if(name.includes(target)&&target.length>2)score+=.5;
+   if(target.includes(name)&&name.length>3)score+=.25;
+   if(artistNorm&&artistNorm.length>2&&(artistName===artistNorm||artistName.includes(artistNorm)))score+=.45;
+   return {...x,_score:score};
+  }).sort((a,b)=>b._score-a._score);
+  let match=ranked.find(x=>x.syncedLyrics&&x._score>=.45)
+    ||ranked.find(x=>x.plainLyrics&&x._score>=.65);
+  if(token!==lyricsRequestToken)return;
+  if(!match){
+   timedLyrics=[];
+   $('#lyricsStatus').textContent='“'+track+'” için zaman kodlu söz bulunamadı. Başka bir kayıt deneyebilirsin.';
+   if(!current?.lyrics)$('#lyricsDisplay').textContent='Senkronize söz bulunamadı.';
+   return;
+  }
+  plainLyrics=match.plainLyrics||'';
+  timedLyrics=parseLRC(match.syncedLyrics||'');
+  if(current){
+   current.lyrics=plainLyrics||current.lyrics||'';
+   current.lyricsRecordId=match.id;
+   if(current.youtubeId){
+    let saved=JSON.parse(localStorage.getItem('ramcoYtLyrics')||'{}');
+    saved[current.youtubeId]=current.lyrics;
+    localStorage.setItem('ramcoYtLyrics',JSON.stringify(saved));
+   }else{
+    let saved=JSON.parse(localStorage.getItem('ramcoLyrics')||'{}');
+    saved[current.id]=current.lyrics;
+    localStorage.setItem('ramcoLyrics',JSON.stringify(saved));
+   }
+  }
+  if(timedLyrics.length){
+   $('#lyricsStatus').textContent='✓ Senkronize söz bulundu: '+match.trackName+' – '+match.artistName;
+   lastRenderedLyric=-1;
+   renderTimedLyrics(getPlaybackTime());
+  }else{
+   $('#lyricsStatus').textContent='Söz bulundu ancak zaman kodu yok. Senkronize kayıt aranması gerekiyor.';
+   $('#lyricsDisplay').textContent=plainLyrics||'Söz bulunamadı.';
+  }
+ }catch(e){
+  if(token===lyricsRequestToken){
+   $('#lyricsStatus').textContent='Söz araması şu an yapılamadı. İnternet bağlantını kontrol edip tekrar dene.';
+   console.warn(e);
+  }
+ }
+}
+function getPlaybackTime(){if(current?.youtubeId&&ytPlayer?.getCurrentTime){try{return ytPlayer.getCurrentTime()||0}catch(_){return 0}}return audio.currentTime||0}
+let lyricTicker=null;function startLyricTicker(){stopLyricTicker();lyricTicker=setInterval(()=>{if(current?.youtubeId&&ytPlayer?.getPlayerState&&ytPlayer.getPlayerState()===1)renderTimedLyrics(getPlaybackTime())},250)}function stopLyricTicker(){if(lyricTicker){clearInterval(lyricTicker);lyricTicker=null}}
+async function youtubeSearch(){let q=$('#ytQuery').value.trim()||$('#search').value.trim();if(!q){toast('Önce şarkı veya sanatçı adı yaz.');return}let key=localStorage.getItem('ramcoYoutubeApiKey');if(!key){toast('RAMÇO içinde arama için YouTube API anahtarı gerekli.');$('details').open=true;$('#ytApiKey').focus();return}$('#ytResults').innerHTML='<p class="ytinfo">Normal YouTube şarkıları aranıyor…</p>';try{let params=new URLSearchParams({part:'snippet',type:'video',videoEmbeddable:'true',maxResults:'10',q:q,key:key,regionCode:'TR'});let r=await fetch('https://www.googleapis.com/youtube/v3/search?'+params.toString());let data=await r.json();if(!r.ok){let msg=data.error?.message||'YouTube API isteği başarısız';if(r.status===403)msg+=' (API kotası, API etkinliği veya anahtar kısıtlamalarını kontrol et.)';if(r.status===400)msg+=' (API anahtarını ve istek parametrelerini kontrol et.)';throw new Error(msg)}let items=(data.items||[]).filter(x=>x.id?.videoId);$('#ytResults').innerHTML=items.map(x=>`<div class="song"><img class="cover" style="object-fit:cover" src="${esc(x.snippet.thumbnails?.medium?.url||x.snippet.thumbnails?.default?.url||'')}" alt=""><div><b>${esc(x.snippet.title)}</b><small>${esc(x.snippet.channelTitle)}</small></div><button data-ytplay="${esc(x.id.videoId)}" data-title="${esc(x.snippet.title)}" data-channel="${esc(x.snippet.channelTitle)}" title="RAMÇO'da oynat">▶</button></div>`).join('')||'<p class="ytinfo">Gömülebilir YouTube şarkısı bulunamadı. Başka bir şarkı veya sanatçı dene.</p>'}catch(e){$('#ytResults').innerHTML='<p class="ytinfo">Arama yapılamadı: '+esc(e.message)+'. YouTube Data API v3 etkin olmalı ve API anahtarının kısıtlamaları doğru ayarlanmalı.</p>';}}
+$('#ytResults').addEventListener('click',e=>{let b=e.target.closest('[data-ytplay]');if(b){$('#ytUrl').value=b.dataset.ytplay;setYoutubePlayer(b.dataset.ytplay,b.dataset.title,b.dataset.channel)}});
+$('#ytLyricsBtn').onclick=()=>{if(!current){toast('Önce bir şarkı seç.');return}$('#lyricTitle').value=current.title;$('#lyricInput').value=current.lyrics||'';$('#lyricsModal').classList.add('open')};
+$('#autoLyricsBtn').onclick=()=>{if(!current){toast('Önce bir şarkı seç.');return}findLyrics(current.title,current.artist||'')};
+function loadYoutube(){let raw=$('#ytUrl').value.trim();let id='';try{let u=new URL(raw);if(u.hostname.includes('youtu.be'))id=u.pathname.slice(1).split('/')[0];else if(u.hostname.includes('youtube.com')){id=u.searchParams.get('v')||((u.pathname.match(/\/(?:embed|shorts)\/([^/?]+)/)||[])[1]||'')}}catch(e){if(/^[A-Za-z0-9_-]{11}$/.test(raw))id=raw}if(!/^[A-Za-z0-9_-]{11}$/.test(id)){toast('Geçerli YouTube bağlantısı veya 11 karakterli video kodu gir.');return}setYoutubePlayer(id)}
+$('#ytSearch').onclick=youtubeSearch;$('#ytLoad').onclick=loadYoutube;$('#ytUrl').addEventListener('keydown',e=>{if(e.key==='Enter')loadYoutube()});$('#ytQuery').addEventListener('keydown',e=>{if(e.key==='Enter')youtubeSearch()});$('#youtubeNav').onclick=()=>{$('#youtubePanel').scrollIntoView({behavior:'smooth'});$('#ytQuery').focus()};
+const lastYt=localStorage.getItem('ramcoLastYoutube');if(lastYt&&location.protocol.startsWith('http'))setYoutubePlayer(lastYt,localStorage.getItem('ramcoLastYoutubeTitle')||'',localStorage.getItem('ramcoLastYoutubeChannel')||'');
+$('#micNav').onclick=()=>$('#micButton').click();$('#stageNav').onclick=()=>document.documentElement.requestFullscreen?.();
+$('#fullBtn').onclick=()=>document.documentElement.requestFullscreen?.();
+function setupPlaybackGraph(){
+ if(playbackCtx)return true;
+ try{
+  playbackCtx=new(window.AudioContext||window.webkitAudioContext)();
+  playbackSource=playbackCtx.createMediaElementSource(audio);
+  playbackOutput=playbackCtx.createGain();playbackOutput.gain.value=+$('#volume').value/100;
+  vocalSplitter=playbackCtx.createChannelSplitter(2);vocalLeft=playbackCtx.createGain();vocalRight=playbackCtx.createGain();vocalMerger=playbackCtx.createChannelMerger(2);vocalGain=playbackCtx.createGain();
+  vocalLeft.gain.value=.5;vocalRight.gain.value=-.5;vocalGain.gain.value=1;
+  vocalSplitter.connect(vocalLeft,0);vocalSplitter.connect(vocalRight,1);
+  vocalLeft.connect(vocalMerger,0,0);vocalLeft.connect(vocalMerger,0,1);
+  vocalRight.connect(vocalMerger,0,0);vocalRight.connect(vocalMerger,0,1);
+  vocalMerger.connect(vocalGain);vocalGain.connect(playbackOutput);playbackOutput.connect(playbackCtx.destination);
+  playbackSource.connect(playbackOutput);
+  return true;
+ }catch(err){console.error(err);toast('Ses işleme bu tarayıcıda başlatılamadı.');return false}
+}
+async function setVocalReduction(on){
+ if(!audio.src){toast(current?.youtubeId?'YouTube oynatıcısının sesine tarayıcı güvenlik sınırları nedeniyle vokal filtresi uygulanamaz. Dosya yükleyerek vokal azaltmayı kullanabilirsin.':'Önce telefonundan bir müzik dosyası yükle.');return}
+ if(!setupPlaybackGraph())return;
+ try{await playbackCtx.resume();playbackSource.disconnect();if(on)playbackSource.connect(vocalSplitter);else playbackSource.connect(playbackOutput);vocalReduced=on;let b=$('#vocalToggle');b.textContent=on?'🎚 Vokal azalt: Açık':'🎚 Vokal azalt: Kapalı';b.classList.toggle('btn',on);b.classList.toggle('secondary',!on);b.setAttribute('aria-pressed',String(on));toast(on?'Vokal azaltma açıldı (stereo merkez iptali).':'Orijinal ses geri yüklendi.')}catch(err){console.error(err);toast('Vokal azaltma açılamadı.')}
+}
+$('#vocalToggle').onclick=()=>setVocalReduction(!vocalReduced);
+$('#playBtn').onclick=()=>{if(!audio.src){toast(current?.youtubeId?'YouTube oynatıcısının sesine tarayıcı güvenlik sınırları nedeniyle vokal filtresi uygulanamaz. Dosya yükleyerek vokal azaltmayı kullanabilirsin.':'Önce telefonundan bir müzik dosyası yükle.');return}if(audio.paused){audio.play();$('#playBtn').textContent='Ⅱ'}else{audio.pause();$('#playBtn').textContent='▶'}};
+$('#stopBtn').onclick=()=>{audio.pause();audio.currentTime=0;$('#playBtn').textContent='▶'};
+$('#nextBtn').onclick=()=>{let i=songs.indexOf(current);selectSong(songs[(i+1+songs.length)%songs.length].id)};
+audio.ontimeupdate=()=>{$('#seek').value=audio.duration?audio.currentTime/audio.duration*100:0;$('#elapsed').textContent=fmt(audio.currentTime);$('#duration').textContent=fmt(audio.duration);if((timedLyrics.length||manualWordTimings.length)&&!current?.youtubeId)renderTimedLyrics(audio.currentTime)};
+$('#seek').oninput=()=>{if(audio.duration)audio.currentTime=audio.value/100*audio.duration};
+$('#karaokeToggle').onclick=()=>{let b=$('#karaokeToggle');b.textContent=b.textContent.includes('Açık')?'🎤 Karaoke modu: Kapalı':'🎤 Karaoke modu: Açık';$('#lyricsDisplay').style.opacity=b.textContent.includes('Kapalı')?'.25':'1'};
+$('#lyricsBtn').onclick=()=>{$('#lyricTitle').value=current?.title||'';$('#lyricInput').value=current?.lyrics||'';$('#lyricsModal').classList.add('open')};
+$('#cancelLyrics').onclick=()=>$('#lyricsModal').classList.remove('open');
+$('#saveLyrics').onclick=()=>{let title=$('#lyricTitle').value.trim(),lyrics=$('#lyricInput').value;if(!title){toast('Şarkı adı gir.');return}if(current?.youtubeId){current.title=title;current.lyrics=lyrics;let ytSaved=JSON.parse(localStorage.getItem('ramcoYtLyrics')||'{}');ytSaved[current.youtubeId]=lyrics;localStorage.setItem('ramcoYtLyrics',JSON.stringify(ytSaved));$('#trackTitle').textContent=title;$('#lyricsDisplay').textContent=lyrics||'Henüz söz eklenmedi.';$('#lyricsModal').classList.remove('open');toast('Bu YouTube şarkısının sözleri bu cihazda kaydedildi.');return}let s=current||{id:Date.now(),title,artist:'Kişisel içerik',genre:'Tümü',src:''};if(!current)songs.unshift(s);s.title=title;s.lyrics=lyrics;current=s;let saved=JSON.parse(localStorage.getItem('ramcoLyrics')||'{}');saved[s.id]=lyrics;localStorage.setItem('ramcoLyrics',JSON.stringify(saved));$('#trackTitle').textContent=title;$('#lyricsDisplay').textContent=lyrics;$('#lyricsModal').classList.remove('open');toast('Şarkı sözleri bu cihazda kaydedildi.')};
+const sliders=['echo','reverb','bass','treble','volume'];sliders.forEach(id=>$('#'+id).oninput=e=>{$('#'+id+'Val').textContent=e.target.value+'%';applyAudio()});
+function applyAudio(){let v=+$('#volume').value/100;if(playbackOutput)playbackOutput.gain.value=v;if(!ctx)return;if(micGain)micGain.gain.value=v;if(delay)delay.delayTime.value=.08+(+$('#echo').value/100)*.42;if(feedback)feedback.gain.value=(+$('#echo').value/100)*.48;if(low)low.gain.value=(+$('#bass').value-50)*.24;if(high)high.gain.value=(+$('#treble').value-50)*.24;if(convolver)convolver.wetGain.gain.value=+$('#reverb').value/100*.45}
+async function startMic(){try{micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();await ctx.resume();micSource=ctx.createMediaStreamSource(micStream);micGain=ctx.createGain();low=ctx.createBiquadFilter();low.type='lowshelf';low.frequency.value=180;high=ctx.createBiquadFilter();high.type='highshelf';high.frequency.value=3500;delay=ctx.createDelay(1);feedback=ctx.createGain();let dry=ctx.createGain();let wet=ctx.createGain();convolver={wetGain:wet};let impulse=ctx.createBuffer(2,ctx.sampleRate*1.8,ctx.sampleRate);for(let c=0;c<2;c++){let d=impulse.getChannelData(c);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.5)}let conv=ctx.createConvolver();conv.buffer=impulse;micSource.connect(low);low.connect(high);high.connect(micGain);micGain.connect(dry);dry.connect(ctx.destination);micGain.connect(delay);delay.connect(feedback);feedback.connect(delay);delay.connect(ctx.destination);micGain.connect(conv);conv.connect(wet);wet.connect(ctx.destination);micOn=true;$('#micStatus').textContent='Açık';$('#micButton').textContent='Mikrofonu kapat';applyAudio();toast('Mikrofon açıldı. Kulaklık kullan.')}catch(err){toast('Mikrofon açılamadı. HTTPS bağlantısı ve izin gerekli.');console.error(err)}}
+function stopMic(){if(micStream)micStream.getTracks().forEach(t=>t.stop());micStream=null;micOn=false;$('#micStatus').textContent='Kapalı';$('#micButton').textContent='🎙 Mikrofonu aç'}
+$('#micButton').onclick=()=>micOn?stopMic():startMic();
+render();
+</script>
+</body></html>
